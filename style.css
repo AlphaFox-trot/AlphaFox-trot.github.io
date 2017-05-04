@@ -6,3 +6,28 @@ h1{
 	background-color: lime;
 	text-align: center;
 }
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+	background-color: #dddddd;
+	overflow: hidden;
+}
+li {
+    display: inline;
+	float: left;
+}
+li a {
+    display: block;
+    padding: 14px 16px;
+    background-color: #dddddd;
+	text-decoration: none;
+	color: blue;
+}
+li a:hover {
+    background-color: #111;
+}
+.active {
+    background-color: #4CAF50;
+	color: white;
+}
