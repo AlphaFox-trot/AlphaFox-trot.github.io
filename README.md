@@ -1,1 +1,0 @@
-# AlphaFox-trot.github.io
