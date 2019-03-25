@@ -2,7 +2,9 @@
 // Your Name
 // Date
 
-let turn, allyCards, enemyCards;
+let turn, allyCards = [], allyhand = [], enemyCards = [], enemyHand = [];
+let view;
+
 function setup() {
   createCanvas(windowWidth, windowHeight);
 }
