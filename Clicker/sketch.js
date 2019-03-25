@@ -4,7 +4,7 @@
 
 let colour, name, chances, event, difficulty;
 let level, area, menu, lives, cash, price, time;
-let timer, buffer;
+let timer, buffer, timeBonus;
 let listColours = ["red", "blue", "green", "yellow", "purple", "cyan"];
 let eventList = [];
 let buttonX1, buttonX2, buttonY1, buttonY2;
@@ -20,11 +20,12 @@ function setup() {
   buttonY2 = windowHeight/2;
   extraTime = 1;
   extraCash = 1;
-  extraLives = 2;
+  extraLives = 1;
   cash = 50;
   price = 10;
   chances = 5;
   buffer = 0;
+  timeBonus = 5;
 }
 
 function draw() {
@@ -39,7 +40,7 @@ function draw() {
     buttonX2 = windowWidth/2;
     buttonY1 = windowHeight/3;
     buttonY2 = windowHeight/1.5;
-    eventList = ["inverted", "flipped",  "nothing",  "nothing",  "nothing",  "nothing",  "nothing",  "nothing",  "nothing",  "nothing",  "nothing"];
+    eventList = ["inverted", "flipped",  "nothing",  "nothing",  "nothing",  "nothing",  "nothing",  "nothing",  "nothing",  "nothing"];
   }
   else if (mouseIsPressed && menu === "premain" && mouseX >= buttonX2 - 125 && mouseX <= buttonX2 + 125 && mouseY >= buttonY2 - 50 && mouseY <= buttonY2 + 50){
     menu = "main";
@@ -57,7 +58,7 @@ function draw() {
     lives = extraLives;
     level = 0;
     progress();
-    time = 1000;
+    time = 1500;
   }
   else if (mouseIsPressed && menu === "main" && mouseX >= buttonX2 - 125 && mouseX <= buttonX2 + 125 && mouseY >= buttonY2 - 50 && mouseY <= buttonY2 + 50 && buffer < 0){
     menu = "upgrades";
@@ -142,7 +143,10 @@ function progress(){
     name = random (listColours);
   }
   cash = cash + round(level / 10);
-  time = time + extraTime * 10;
+  if (timeBonus === level){
+    time = time + extraTime * 10;
+    timeBonus = level + 5;
+  }
 }
 
 function generateWords(){
@@ -234,7 +238,7 @@ function showMenu(){
     text("time left " + time, 50, 180); 
     if(event === "inverted"){
       textAlign(CENTER);
-      text("Inverted Controlls", windowWidth/2, 100);
+      text("Inverted Controls", windowWidth/2, 100);
       textAlign(LEFT);
     }
     if (lives <= -1){
