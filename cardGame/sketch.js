@@ -1,11 +1,8 @@
-// Project Title
+// Seige on fort stone
 // Your Name
 // Date
-//
-// Extra for Experts:
-// - describe what you did to take this project "above and beyond"
 
-
+let turn, allyCards, enemyCards;
 function setup() {
   createCanvas(windowWidth, windowHeight);
 }
