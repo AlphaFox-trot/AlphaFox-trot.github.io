@@ -7,8 +7,8 @@
 
 let time;
 let rectWidth;
-let rects = [];
-let numRects = 100;
+let rectList = [];
+let numRects;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -21,10 +21,23 @@ function setup() {
 function draw() {
   background(220);
   fill (0);
-  for (let i = 0; i < rects; i++){
-    rect(rects[i].x), rect(rects[i].x), rect(rects[i].width), rect(rects[i].height);
+  for (let i = 0; i < numRects; i++){
+    rect(rectList[i].x, rectList[i].y, rectList[i].width, rectList[i].height);
   }
   rect(rect.x, rect.y, rect.width, rect.height);
+
+  rectList.shift();
+
+  let rectHeight = noise(time) * height;
+  let myRect = {
+    height: rectHeight,
+    width: rectWidth,
+    x: width - rectWidth,
+    y: height - rectHeight,
+  };
+  rectList.push(myRect);
+
+  time += 0.01;
 }
 
 function generateTerrain(){
@@ -33,10 +46,10 @@ function generateTerrain(){
     let myRect = {
       height: rectHeight,
       width: rectWidth,
-      x: 0,
+      x: i * rectWidth,
       y: height - rectHeight,
     };
-    rects.push(myRect);
+    rectList.push(myRect);
     time += 0.01;
   }
 }
