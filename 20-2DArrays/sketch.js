@@ -43,7 +43,6 @@ function create2DArrays(cols, rows){
     for(let j = 0; j < cols; j++){
       emptyArray[i].push(0);
     }
-
   }
   return emptyArray;
 }
@@ -60,7 +59,6 @@ function createRandom2DArrays(cols, rows){
         emptyArray[i].push(1);
       }
     }
-
   }
   return emptyArray;
 }
@@ -82,7 +80,7 @@ function update(){
 
       neighbors -= grid[y][x];
 
-      if(grid[y][x] === 1){// alive
+      if(grid[y][x] === 1){   // alive
         if (neighbors === 2 || neighbors === 3){
           nextTurn[y][x] = 1;
         }
@@ -90,7 +88,7 @@ function update(){
           nextTurn[y][x] = 0;
         }
       }
-      else{
+      else{   // dead
         if (neighbors === 3){
           nextTurn[y][x] = 1;
         }
@@ -106,6 +104,12 @@ function update(){
 function keyPressed(){
   if (key === " "){
     update();
+  }
+  if (key === "r"){
+    grid = createRandom2DArrays(gridSize, gridSize);
+  }
+  if (key === "c"){
+    grid = create2DArrays();
   }
 }
 
