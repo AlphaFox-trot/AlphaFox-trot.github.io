@@ -9,6 +9,7 @@ let grid = [];
 let lane1 = [];
 let lane2 = [];
 let menu = "start";
+let level, wave;
 let type;
 let buttonX1, buttonX2, buttonY1, buttonY2;
 
@@ -26,6 +27,7 @@ function checkMenu(){
   if (mouseIsPressed && menu === "start" && mouseX >= buttonX1 - 125 && mouseX <= buttonX1 + 125 && mouseY >= buttonY1 - 50 && mouseY <= buttonY1 + 50){
     menu = "game";
     type = "campain";
+    level = 1;
   }
   else if (mouseIsPressed && menu === "start" && mouseX >= buttonX2 - 125 && mouseX <= buttonX2 + 125 && mouseY >= buttonY2 - 50 && mouseY <= buttonY2 + 50){
     menu = "game";
@@ -49,5 +51,25 @@ function displayMenu(){
     text("Campain", buttonX1, buttonY1);
     text("Endless", buttonX2, buttonY2);
     textAlign(LEFT);
+    textSize(32);
+    text("welcome player, you are the warden of colony V, a concentration camp of 'impures' sent to a distant plannet by a cult leader fighting a 'holy war'. As warden it is your job to protect them, you have full access to the defence grid arsinal. Good luck warden", windowWidth/2, 200, 1000, 200);
+  }
+  if (menu === "game"){
+    if (level === 1){
+      lane1 = [1, 0, 1, 0, 1, 0, 1, 0, 1, 0];
+      lane2 = [0, 1, 0, 1, 0, 1, 0, 1, 0, 1];
+      grid = [lane1, lane2, lane1, lane2, lane1];
+    }
+    for (let i = 0; i < grid.length; i++){
+      for (let j = 0; j < lane1.length; j++){
+        if (grid[i][j] === 0){
+          fill(200, 0, 150);
+        }
+        if (grid[i][j] === 1){
+          fill(150, 0, 200);
+        }
+        rect(j*100 + 400, i*100 + 250, 100, 100);
+      }
+    }
   }
 }
