@@ -35,6 +35,8 @@ function draw() {
   background(220);
   displayMenu();
   checkMenu();
+  cursorX = round(mouseX/100);
+  cursorY = round(mouseY/100);
 }
 
 function checkMenu(){
@@ -112,22 +114,15 @@ function displayMenu(){
       }
     }
     fill(255, 255, 0);
-    rect(cursorX*100 + 400, cursorY*100 + 300, 10, 10);
+    if (mouseX > 350 && mouseX < 1350 && mouseY > 250 && mouseY < 750){
+      rect(cursorX*100, cursorY*100, 10, 10);
+    } 
   }
 }
 
-function keyPressed(){
-  if(keyCode === LEFT_ARROW){
-    cursorX--;
-  }
-  if(keyCode === RIGHT_ARROW){
-    cursorX++;
-  }
-  if(keyCode === UP_ARROW){
-    cursorY--;
-  }
-  if(keyCode === DOWN_ARROW){
-    cursorY++;
-  }
-
+function mousePressed(){
+  if (mouseX > 350 && mouseX < 1350 && mouseY > 250 && mouseY < 750){
+    defenceGrid[cursorY-4][cursorX-3] = 2;
+  } 
 }
+
