@@ -14,7 +14,6 @@ let cursorX = 0, cursorY = 0;
 let defenceGrid =[];
 let defenceLane = [];
 let selectedTower = 0;
-let towerList = [];
 
 // list of enemies on the grid
 let enemyGrid = [];
@@ -115,14 +114,17 @@ function displayMenu(){
     }
     fill(255, 255, 0);
     if (mouseX > 350 && mouseX < 1350 && mouseY > 250 && mouseY < 750){
-      rect(cursorX*100, cursorY*100, 10, 10);
+      rect(cursorX*100-45, cursorY*100-45, 10, 10);
+      rect(cursorX*100+45, cursorY*100-45, 10, 10);
+      rect(cursorX*100+45, cursorY*100+45, 10, 10);
+      rect(cursorX*100-45, cursorY*100+45, 10, 10);
     } 
   }
 }
 
 function mousePressed(){
-  if (mouseX > 350 && mouseX < 1350 && mouseY > 250 && mouseY < 750){
-    defenceGrid[cursorY-4][cursorX-3] = 2;
+  if (mouseX > 350 && mouseX < 1350 && mouseY > 250 && mouseY < 750 && defenceGrid[cursorY-3][cursorX-4] === 0){
+    defenceGrid[cursorY-3][cursorX-4] = 2;
   } 
 }
 
