@@ -18,14 +18,14 @@ let defenceLane3 = [];
 let defenceLane4 = [];
 let defenceLane5 = [];
 let selectedTower = 1;
-let price;
+let price, scrap;
 
 // list of enemies on the grid
 let enemyGrid = [];
 let enemyList = [];
 let enemyWave = [];
 let timer = 0;
-let ineravle = 0;
+let buffer = 500;
 
 // controls the rest of the game, and menu system
 let menu = "start";
@@ -66,12 +66,16 @@ function draw() {
   else if (selectedTower === 3){
     price = 65;
   }
+  else if (selectedTower === 4){
+    price = 0;
+  }
 }
 
 function checkMenu(){
   if (mouseIsPressed && menu === "start" && mouseX >= buttonX1 - 125 && mouseX <= buttonX1 + 125 && mouseY >= buttonY1 - 50 && mouseY <= buttonY1 + 50){
     menu = "game";
     type = "campain";
+    scrap = 30;
   }
   else if (mouseIsPressed && menu === "start" && mouseX >= buttonX2 - 125 && mouseX <= buttonX2 + 125 && mouseY >= buttonY2 - 50 && mouseY <= buttonY2 + 50){
     menu = "game";
@@ -102,6 +106,22 @@ function displayMenu(){
     rect(windowWidth/2, windowHeight/2, windowWidth, windowHeight);
     fill(100, 100, 100);
     rect(850, 0, 1000, 500);
+    textAlign(CENTER);
+    fill(0);
+    text("Scrap " + scrap, 200 , 100);
+    text("Price " + price, 200 , 150);
+    if (selectedTower === 1){
+      fill(50);
+      rect(200, 250 , 50, 50);
+    }
+    if (selectedTower === 2){
+      fill(255, 0, 0);
+      rect(200, 250, 75, 25);
+    }
+    if (selectedTower === 3){
+      fill(0, 150, 150);
+      rect(200, 250, 25, 75);
+    }
 
     // displayes Grid
     for (let i = 0; i < grid.length; i++){
@@ -140,6 +160,21 @@ function displayMenu(){
       rect(cursorX*100+45, cursorY*100+45, 10, 10);
       rect(cursorX*100-45, cursorY*100+45, 10, 10);
     } 
+    buffer--;
+    if (buffer <= 0){
+      refresh();
+      buffer = 500;
+    }
+  }
+}
+
+function refresh(){
+  for (let i = 0; i < defenceGrid.length; i++){
+    for (let j = 0; j < defenceLane1.length; j++){
+      if(defenceGrid[i][j] === 1){
+        scrap += 10;
+      }
+    }
   }
 }
 
@@ -148,8 +183,11 @@ function enemyController(){
 }
 
 function mousePressed(){
-  if (mouseX > 350 && mouseX < 1350 && mouseY > 250 && mouseY < 750 &&  menu === "game" && (defenceGrid[cursorY-3][cursorX-4] === 0 || selectedTower === 0)){
+  if (mouseX > 350 && mouseX < 1350 && mouseY > 250 && mouseY < 750 &&  menu === "game" && scrap >= price && (defenceGrid[cursorY-3][cursorX-4] === 0 || selectedTower === 0)){
     defenceGrid[cursorY-3][cursorX-4] = selectedTower;
+    if (selectedTower !== 4){
+      scrap = scrap - price;
+    }
   } 
 }
 
