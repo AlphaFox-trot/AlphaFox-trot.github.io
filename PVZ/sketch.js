@@ -2,6 +2,26 @@
 // Andrew Bertrand
 // 4/5/2019
 
+class Enemy{
+  constructor(x, aList, aLane, aColour, aSpeed) {
+    this.x = x;
+    this.location = aList;
+    this.lane = aLane;
+    this.color = aColour;
+    this.speed = aSpeed; 
+  }
+
+  display(){
+    fill(this.color);
+    stroke(this.color);
+    ellipse(this.x, this.list, 2, 2);
+  }
+
+  move() {
+    this.x -= 0.1;
+  }
+}
+
 // makes the grid
 let grid = [];
 let lane1 = [];
@@ -25,7 +45,7 @@ let enemyGrid = [];
 let enemyList = [];
 let enemyWave = [];
 let timer = 0;
-let buffer = 500;
+let buffer = 200;
 
 // controls the rest of the game, and menu system
 let menu = "start";
@@ -67,6 +87,9 @@ function draw() {
     price = 65;
   }
   else if (selectedTower === 4){
+    price = 40;
+  }
+  else if (selectedTower === 5){
     price = 0;
   }
 }
@@ -122,6 +145,10 @@ function displayMenu(){
       fill(0, 150, 150);
       rect(200, 250, 25, 75);
     }
+    if (selectedTower === 4){
+      fill(150, 150, 0);
+      rect(200, 250, 80, 80);
+    }
 
     // displayes Grid
     for (let i = 0; i < grid.length; i++){
@@ -151,6 +178,10 @@ function displayMenu(){
           fill(0, 150, 150);
           rect(j*100 + 430, i*100 + 300, 25, 75);
         }
+        if (defenceGrid[i][j] === 4){
+          fill(150, 150, 0);
+          rect(j*100 + 400, i*100 + 300, 80, 80);
+        }
       }
     }
     fill(255, 255, 0);
@@ -163,7 +194,7 @@ function displayMenu(){
     buffer--;
     if (buffer <= 0){
       refresh();
-      buffer = 500;
+      buffer = 200;
     }
   }
 }
@@ -172,20 +203,24 @@ function refresh(){
   for (let i = 0; i < defenceGrid.length; i++){
     for (let j = 0; j < defenceLane1.length; j++){
       if(defenceGrid[i][j] === 1){
-        scrap += 10;
+        scrap += 5;
       }
     }
   }
+  scrap += 10;
 }
 
 function enemyController(){
-  
+  for(let i = 0; i < enemyList.length; i++){
+    enemyList[i].move();
+    enemyList[i].display();
+  }
 }
 
 function mousePressed(){
   if (mouseX > 350 && mouseX < 1350 && mouseY > 250 && mouseY < 750 &&  menu === "game" && scrap >= price && (defenceGrid[cursorY-3][cursorX-4] === 0 || selectedTower === 0)){
     defenceGrid[cursorY-3][cursorX-4] = selectedTower;
-    if (selectedTower !== 4){
+    if (selectedTower !== 5){
       scrap = scrap - price;
     }
   } 
@@ -202,6 +237,9 @@ function keyPressed(){
     selectedTower = 3;
   }
   if (key === "4"){
+    selectedTower = 4;
+  }
+  if (key === "5"){
     selectedTower = 0;
   }
 }
