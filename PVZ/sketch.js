@@ -5,7 +5,7 @@
 class Enemy{
   constructor(x, aList, aLane, aColour, aSpeed) {
     this.x = x;
-    this.location = aList;
+    this.y = aList;
     this.lane = aLane;
     this.color = aColour;
     this.speed = aSpeed; 
@@ -42,7 +42,11 @@ let price, scrap;
 
 // list of enemies on the grid
 let enemyGrid = [];
-let enemyList = [];
+let enemyList1 = [];
+let enemyList2 = [];
+let enemyList3 = [];
+let enemyList4 = [];
+let enemyList5 = [];
 let enemyWave = [];
 let timer = 0;
 let buffer = 200;
@@ -89,7 +93,7 @@ function draw() {
   else if (selectedTower === 4){
     price = 40;
   }
-  else if (selectedTower === 5){
+  else if (selectedTower === 0){
     price = 0;
   }
 }
@@ -103,6 +107,7 @@ function checkMenu(){
   else if (mouseIsPressed && menu === "start" && mouseX >= buttonX2 - 125 && mouseX <= buttonX2 + 125 && mouseY >= buttonY2 - 50 && mouseY <= buttonY2 + 50){
     menu = "game";
     type = "endless";
+    scrap = 50;
   }
 }
 
@@ -120,6 +125,7 @@ function displayMenu(){
     textAlign(LEFT);
     textSize(32);
     text("welcome player, you are the warden of colony V, a prison full of 'impures' sent to a distant plannet by a cult leader fighting a 'holy war'. As warden it is your job to protect them, you have full access to the defence grid arsinal. Good luck warden", windowWidth/2, 200, 1000, 200);
+    text("press 1 - 4 to select towers, 5 erases the current slot, tower 1 produces scrap, tower 2 shoots enemies, tower 3 blocks enemies, tower 4 damages enemies that stand on it, last untill the waves stop", windowWidth/2, 800, 1500, 200);
   }
   if (menu === "game"){
     lane1 = [1, 0, 1, 0, 1, 0, 1, 0, 1, 0];
@@ -192,6 +198,7 @@ function displayMenu(){
       rect(cursorX*100-45, cursorY*100+45, 10, 10);
     } 
     buffer--;
+    enemyController();
     if (buffer <= 0){
       refresh();
       buffer = 200;
@@ -211,9 +218,41 @@ function refresh(){
 }
 
 function enemyController(){
-  for(let i = 0; i < enemyList.length; i++){
-    enemyList[i].move();
-    enemyList[i].display();
+  let enemyBuffer = 1000;
+  if (enemyBuffer >= 0){
+    enemyBuffer--;
+  }
+  else{
+    let anotherBuffer = random(200, 500);
+    for(let i = 0; i < enemyList1.length; i++){
+      enemyList1[i].move();
+      enemyList1[i].display();
+    }
+    for(let i = 0; i < enemyList2.length; i++){
+      enemyList2[i].move();
+      enemyList2[i].display();
+    }
+    for(let i = 0; i < enemyList3.length; i++){
+      enemyList3[i].move();
+      enemyList3[i].display();
+    }
+    for(let i = 0; i < enemyList4.length; i++){
+      enemyList4[i].move();
+      enemyList4[i].display();
+    }
+    for(let i = 0; i < enemyList5.length; i++){
+      enemyList5[i].move();
+      enemyList5[i].display();
+    }
+    anotherBuffer--;
+    if (anotherBuffer <= 0){
+      let selected;
+      selected = enemyWave.shift();
+      if (selected === 1){
+        enemyList1.push(new Enemy(1000, 100, 0, "red", 2));
+      }
+      anotherBuffer = random(100, 300);
+    }
   }
 }
 
