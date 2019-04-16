@@ -3,22 +3,37 @@
 // 4/5/2019
 
 class Enemy{
-  constructor(x, aList, aLane, aColour, aSpeed) {
+  constructor(x, aList, aLane, aColour, aSpeed, aHealth) {
     this.x = x;
     this.y = aList;
     this.lane = aLane;
     this.color = aColour;
     this.speed = aSpeed; 
+    this.health = aHealth;
   }
 
   display(){
     fill(this.color);
     stroke(this.color);
-    ellipse(this.x, this.list, 2, 2);
+    ellipse(this.x, this.list + 100, 2, 2);
   }
 
   move() {
     this.x -= 0.1;
+  }
+
+  damage(){
+    for (let j = 0; j < defenceLane1.length; j++){
+      if(defenceGrid[this.lane][j] === 2){
+        this.Health-=1;
+      }
+    }
+  }
+
+  dealDamage(){
+    if (this.x / 100 ==){
+
+    }
   }
 }
 
@@ -218,9 +233,9 @@ function refresh(){
 }
 
 function enemyController(){
-  let enemyBuffer = 1000;
-  if (enemyBuffer >= 0){
-    enemyBuffer--;
+  let waveBuffer = 1000;
+  if (waveBuffer >= 0){
+    waveBuffer--;
   }
   else{
     let anotherBuffer = random(200, 500);
@@ -249,7 +264,13 @@ function enemyController(){
       let selected;
       selected = enemyWave.shift();
       if (selected === 1){
-        enemyList1.push(new Enemy(1000, 100, 0, "red", 2));
+        enemyList1.push(new Enemy(1000, 100, 0, "red", 2, 5));
+      }
+      if (selected === 2){
+        enemyList1.push(new Enemy(1000, 100, 0, "blue", 3, 3));
+      }
+      if (selected === 3){
+        enemyList1.push(new Enemy(1000, 100, 0, "grey", 1, 10));
       }
       anotherBuffer = random(100, 300);
     }
