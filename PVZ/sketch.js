@@ -3,10 +3,24 @@
 // 4/5/2019
 
 class Enemy{
-  constructor(x, aList, aLane, aColour, aSpeed, aHealth) {
+  constructor(x, aList, aColour, aSpeed, aHealth) {
     this.x = x;
     this.y = aList;
-    this.lane = aLane;
+    if(this.y === 0){
+      this.row = enemyList1;
+    }
+    else if(this.y === 1){
+      this.row = enemyList2;
+    }
+    else if(this.y === 2){
+      this.row = enemyList3;
+    }
+    else if(this.y === 3){
+      this.row = enemyList4;
+    }
+    else if(this.y === 4){
+      this.row = enemyList5;
+    }
     this.color = aColour;
     this.speed = aSpeed; 
     this.health = aHealth;
@@ -14,24 +28,23 @@ class Enemy{
 
   display(){
     fill(this.color);
-    stroke(this.color);
-    ellipse(this.x, this.list + 100, 2, 2);
+    ellipse(this.x, this.y*100 + 300, 40, 40);
   }
 
   move() {
-    this.x -= 0.1;
+    this.x -= this.speed;
   }
 
-  damage(){
-    for (let j = 0; j < defenceLane1.length; j++){
-      if(defenceGrid[this.lane][j] === 2){
-        this.Health-=1;
+  damage() {
+    for(let i = 0; i < this.row.length; i++){
+      if(this.row[i] === 2){
+        this.health--;
       }
     }
   }
 
-  dealDamage(){
-    if (this.x / 100 ==){
+  death(){
+    if(this.healt <= 0){
 
     }
   }
@@ -65,6 +78,9 @@ let enemyList5 = [];
 let enemyWave = [];
 let timer = 0;
 let buffer = 200;
+let waveBuffer = 200;
+let anotherBuffer;
+let selected;
 
 // controls the rest of the game, and menu system
 let menu = "start";
@@ -74,6 +90,7 @@ let buttonX1, buttonX2, buttonY1, buttonY2;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
+  anotherBuffer = random(200, 500);
   defenceLane1 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   defenceLane2 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   defenceLane3 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -93,7 +110,6 @@ function draw() {
   background(220);
   displayMenu();
   checkMenu();
-  enemyController();
   cursorX = round(mouseX/100);
   cursorY = round(mouseY/100);
   if (selectedTower === 1){
@@ -213,11 +229,11 @@ function displayMenu(){
       rect(cursorX*100-45, cursorY*100+45, 10, 10);
     } 
     buffer--;
-    enemyController();
     if (buffer <= 0){
       refresh();
       buffer = 200;
     }
+    enemyController();
   }
 }
 
@@ -233,12 +249,10 @@ function refresh(){
 }
 
 function enemyController(){
-  let waveBuffer = 1000;
   if (waveBuffer >= 0){
     waveBuffer--;
   }
   else{
-    let anotherBuffer = random(200, 500);
     for(let i = 0; i < enemyList1.length; i++){
       enemyList1[i].move();
       enemyList1[i].display();
@@ -261,16 +275,15 @@ function enemyController(){
     }
     anotherBuffer--;
     if (anotherBuffer <= 0){
-      let selected;
       selected = enemyWave.shift();
       if (selected === 1){
-        enemyList1.push(new Enemy(1000, 100, 0, "red", 2, 5));
+        enemyList1.push(new Enemy(1500, floor(random(0, 5)), "red", 1, 3));
       }
       if (selected === 2){
-        enemyList1.push(new Enemy(1000, 100, 0, "blue", 3, 3));
+        enemyList1.push(new Enemy(1500, floor(random(0, 5)), "blue", 1.5, 2));
       }
       if (selected === 3){
-        enemyList1.push(new Enemy(1000, 100, 0, "grey", 1, 10));
+        enemyList1.push(new Enemy(1500, floor(random(0, 5)), "grey", 0.5, 5));
       }
       anotherBuffer = random(100, 300);
     }
