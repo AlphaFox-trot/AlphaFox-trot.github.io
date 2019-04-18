@@ -44,8 +44,55 @@ class Enemy{
   }
 
   death(){
-    if(this.healt <= 0){
+    if(this.health <= 0){
 
+    }
+  }
+}
+
+class Structure {
+  constructor(aType, x, y,){
+    this.type = aType;
+    this.x = x;
+    this.row = y;
+    this.buffer = 100
+  }
+
+  work(){
+    if(this.type === 1){
+      if (this.buffer <= 0){
+        scrap += 5;
+      }
+      else{
+        this.buffer--;
+      }
+    }
+    if(this.type === 2){
+      if(this.row === 0){
+        if(enemylist1.length !== 0){
+          
+        }
+      }
+      if(this.row === 1){
+        if(enemylist2.length !== 0){
+
+        }
+      }
+      if(this.row === 2){
+        if(enemylist3.length !== 0){
+
+        }
+      }
+      if(this.row === 3){
+        if(enemylist4.length !== 0){
+
+        }
+      }
+      if(this.row === 4){
+        if(enemylist5.length !== 0){
+
+        }
+      }
     }
   }
 }
@@ -119,7 +166,7 @@ function draw() {
     price = 50;
   }
   else if (selectedTower === 3){
-    price = 65;
+    price = 40;
   }
   else if (selectedTower === 4){
     price = 40;
