@@ -42,20 +42,15 @@ class Enemy{
       }
     }
   }
-
-  death(){
-    if(this.health <= 0){
-
-    }
-  }
 }
 
 class Structure {
-  constructor(aType, x, y,){
+  constructor(aType, x, y, aList){
     this.type = aType;
     this.x = x;
     this.row = y;
-    this.buffer = 100
+    this.buffer = 100;
+    this.list = aList
   }
 
   work(){
@@ -68,29 +63,13 @@ class Structure {
       }
     }
     if(this.type === 2){
-      if(this.row === 0){
-        if(enemylist1.length !== 0){
-          
+      if(this.list.length !== 0){
+        if (this.buffer <= 0){
+          this.list.shift[0];
+          this.buffer = 100;
         }
-      }
-      if(this.row === 1){
-        if(enemylist2.length !== 0){
-
-        }
-      }
-      if(this.row === 2){
-        if(enemylist3.length !== 0){
-
-        }
-      }
-      if(this.row === 3){
-        if(enemylist4.length !== 0){
-
-        }
-      }
-      if(this.row === 4){
-        if(enemylist5.length !== 0){
-
+        else{
+          this.buffer--;
         }
       }
     }
@@ -339,7 +318,7 @@ function enemyController(){
 
 function mousePressed(){
   if (mouseX > 350 && mouseX < 1350 && mouseY > 250 && mouseY < 750 &&  menu === "game" && scrap >= price && (defenceGrid[cursorY-3][cursorX-4] === 0 || selectedTower === 0)){
-    defenceGrid[cursorY-3][cursorX-4] = selectedTower;
+    defenceGrid[cursorY-3][cursorX-4] = new Structure(selectedTower, defenceGrid[cursorX-4], defencegrid[cursory-3], );
     if (selectedTower !== 5){
       scrap = scrap - price;
     }
