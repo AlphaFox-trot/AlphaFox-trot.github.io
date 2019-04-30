@@ -50,7 +50,7 @@ class Structure {
     this.x = x;
     this.row = y;
     this.buffer = 100;
-    this.list = aList
+    this.list = aList;
   }
 
   work(){
@@ -318,7 +318,8 @@ function enemyController(){
 
 function mousePressed(){
   if (mouseX > 350 && mouseX < 1350 && mouseY > 250 && mouseY < 750 &&  menu === "game" && scrap >= price && (defenceGrid[cursorY-3][cursorX-4] === 0 || selectedTower === 0)){
-    defenceGrid[cursorY-3][cursorX-4] = new Structure(selectedTower, defenceGrid[cursorX-4], defencegrid[cursory-3], );
+    defenceGrid[cursorY-3][cursorX-4] = selectedTower;
+    new Structure(selectedTower, cursorX, cursorY, defenceGrid[cursorY-4]);
     if (selectedTower !== 5){
       scrap = scrap - price;
     }
