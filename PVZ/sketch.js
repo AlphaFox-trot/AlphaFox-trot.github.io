@@ -53,6 +53,24 @@ class Structure {
     this.list = aList;
   }
 
+  display(){
+    if (this.type === 1){
+      fill(50);
+      rect(this.x, this.row, 50, 50);
+    }
+    if (this.type === 2){
+      fill(255, 0, 0);
+      rect(this.x, this.row, 75, 25);
+    }
+    if (this.type === 3){
+      fill(0, 150, 150);
+      rect(this.x, this.row, 25, 75);
+    }
+    if (this.type === 4){
+      fill(150, 150, 0);
+      rect(this.x, this.row, 80, 80);
+    }
+  }
   work(){
     if(this.type === 1){
       if (this.buffer <= 0){
@@ -212,6 +230,10 @@ function displayMenu(){
       fill(150, 150, 0);
       rect(200, 250, 80, 80);
     }
+    for(let i = 0; i < enemyList1.length; i++){
+      enemyList1[i].move();
+      enemyList1[i].display();
+    }
 
     // displayes Grid
     for (let i = 0; i < grid.length; i++){
@@ -226,27 +248,6 @@ function displayMenu(){
       }
     }
 
-    //displayes diffences
-    for (let i = 0; i < defenceGrid.length; i++){
-      for (let j = 0; j < defenceLane1.length; j++){
-        if (defenceGrid[i][j] === 1){
-          fill(50);
-          rect(j*100 + 400, i*100 + 300, 50, 50);
-        }
-        if (defenceGrid[i][j] === 2){
-          fill(255, 0, 0);
-          rect(j*100 + 400, i*100 + 300, 75, 25);
-        }
-        if (defenceGrid[i][j] === 3){
-          fill(0, 150, 150);
-          rect(j*100 + 430, i*100 + 300, 25, 75);
-        }
-        if (defenceGrid[i][j] === 4){
-          fill(150, 150, 0);
-          rect(j*100 + 400, i*100 + 300, 80, 80);
-        }
-      }
-    }
     fill(255, 255, 0);
     if (mouseX > 350 && mouseX < 1350 && mouseY > 250 && mouseY < 750){
       rect(cursorX*100-45, cursorY*100-45, 10, 10);
@@ -254,11 +255,6 @@ function displayMenu(){
       rect(cursorX*100+45, cursorY*100+45, 10, 10);
       rect(cursorX*100-45, cursorY*100+45, 10, 10);
     } 
-    buffer--;
-    if (buffer <= 0){
-      refresh();
-      buffer = 200;
-    }
     enemyController();
   }
 }
@@ -314,12 +310,31 @@ function enemyController(){
       anotherBuffer = random(100, 300);
     }
   }
+  for(let i = 0; i < defenceLane1.length; i++){
+    defenceLane1[i].move();
+    defenceLane1[i].display();
+  }
+  for(let i = 0; i < defenceLane2.length; i++){
+    defenceLane2[i].move();
+    defenceLane2[i].display();
+  }
+  for(let i = 0; i < defenceLane3.length; i++){
+    defenceLane3[i].move();
+    defenceLane3[i].display();
+  }
+  for(let i = 0; i < defenceLane4.length; i++){
+    defenceLane4[i].move();
+    defenceLane4[i].display();
+  }
+  for(let i = 0; i < defenceLane5.length; i++){
+    defenceLane5[i].move();
+    defenceLane5[i].display();
+  }
 }
 
 function mousePressed(){
   if (mouseX > 350 && mouseX < 1350 && mouseY > 250 && mouseY < 750 &&  menu === "game" && scrap >= price && (defenceGrid[cursorY-3][cursorX-4] === 0 || selectedTower === 0)){
-    defenceGrid[cursorY-3][cursorX-4] = selectedTower;
-    new Structure(selectedTower, cursorX, cursorY, defenceGrid[cursorY-4]);
+    defenceGrid[cursorY-3][cursorX-4] =  new Structure(selectedTower, cursorX, cursorY, defenceGrid[cursorY-4]);
     if (selectedTower !== 5){
       scrap = scrap - price;
     }
