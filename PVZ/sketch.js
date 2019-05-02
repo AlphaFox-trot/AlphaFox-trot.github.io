@@ -35,11 +35,10 @@ class Enemy{
     this.x -= this.speed;
   }
 
-  damage() {
-    for(let i = 0; i < this.row.length; i++){
-      if(this.row[i] === 2){
-        this.health--;
-      }
+  damage(number) {
+    this.health -= number;
+    if(this.health <= 0){
+      
     }
   }
 }
@@ -49,46 +48,36 @@ class Structure {
     this.type = aType;
     this.x = x;
     this.row = y;
-    this.buffer = 100;
+    this.buffer = 500;
     this.list = aList;
   }
 
-  display(){
+  show(){
     if (this.type === 1){
       fill(50);
-      rect(this.x, this.row, 50, 50);
+      rect(this.x*100, this.row*100, 50, 50);
     }
     if (this.type === 2){
       fill(255, 0, 0);
-      rect(this.x, this.row, 75, 25);
+      rect(this.x*100, this.row*100, 75, 25);
     }
     if (this.type === 3){
       fill(0, 150, 150);
-      rect(this.x, this.row, 25, 75);
+      rect(this.x*100, this.row*100, 25, 75);
     }
     if (this.type === 4){
       fill(150, 150, 0);
-      rect(this.x, this.row, 80, 80);
+      rect(this.x*100, this.row*100, 80, 80);
     }
   }
   work(){
-    if(this.type === 1){
-      if (this.buffer <= 0){
-        scrap += 5;
-      }
-      else{
-        this.buffer--;
-      }
+    if(this.buffer >= 0){
+      this.buffer--;
     }
-    if(this.type === 2){
-      if(this.list.length !== 0){
-        if (this.buffer <= 0){
-          this.list.shift[0];
-          this.buffer = 100;
-        }
-        else{
-          this.buffer--;
-        }
+    else{
+      if(this.type === 1){
+        this.buffer = 500;
+        scrap += 10;
       }
     }
   }
@@ -256,6 +245,15 @@ function displayMenu(){
       rect(cursorX*100-45, cursorY*100+45, 10, 10);
     } 
     enemyController();
+
+    for (let j = 0; j < defenceGrid.length; j++){
+      for (let i = 0; i < defenceLane1.length; i++){
+        if (defenceGrid[j][i] !== 0){
+          defenceGrid[j][i].show();
+          defenceGrid[j][i].work();
+        }
+      }
+    }
   }
 }
 
@@ -310,26 +308,7 @@ function enemyController(){
       anotherBuffer = random(100, 300);
     }
   }
-  for(let i = 0; i < defenceLane1.length; i++){
-    defenceLane1[i].move();
-    defenceLane1[i].display();
-  }
-  for(let i = 0; i < defenceLane2.length; i++){
-    defenceLane2[i].move();
-    defenceLane2[i].display();
-  }
-  for(let i = 0; i < defenceLane3.length; i++){
-    defenceLane3[i].move();
-    defenceLane3[i].display();
-  }
-  for(let i = 0; i < defenceLane4.length; i++){
-    defenceLane4[i].move();
-    defenceLane4[i].display();
-  }
-  for(let i = 0; i < defenceLane5.length; i++){
-    defenceLane5[i].move();
-    defenceLane5[i].display();
-  }
+
 }
 
 function mousePressed(){
