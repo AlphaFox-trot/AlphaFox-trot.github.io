@@ -37,9 +37,6 @@ class Enemy{
 
   damage(number) {
     this.health -= number;
-    if(this.health <= 0){
-      
-    }
   }
 }
 
@@ -48,7 +45,7 @@ class Structure {
     this.type = aType;
     this.x = x;
     this.row = y;
-    this.buffer = 500;
+    this.buffer = 250;
     this.list = aList;
   }
 
@@ -76,8 +73,12 @@ class Structure {
     }
     else{
       if(this.type === 1){
-        this.buffer = 500;
+        this.buffer = 250;
         scrap += 10;
+      }
+      if(this.type === 2){
+        this.buffer = 250;
+        this.list[0].damage(2);
       }
     }
   }
@@ -109,6 +110,7 @@ let enemyList3 = [];
 let enemyList4 = [];
 let enemyList5 = [];
 let enemyWave = [];
+let pusher;
 let timer = 0;
 let buffer = 200;
 let waveBuffer = 200;
@@ -123,13 +125,14 @@ let buttonX1, buttonX2, buttonY1, buttonY2;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  anotherBuffer = random(200, 500);
+  anotherBuffer = random(300, 500);
   defenceLane1 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   defenceLane2 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   defenceLane3 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   defenceLane4 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   defenceLane5 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   defenceGrid = [defenceLane1, defenceLane2, defenceLane3, defenceLane4, defenceLane5];
+  enemyGrid = [enemyList1, enemyList2, enemyList3, enemyList4, enemyList5];
   buttonX1 = windowWidth/1.5;
   buttonX2 = windowWidth/3;
   buttonY1 = windowHeight/2;
@@ -296,14 +299,15 @@ function enemyController(){
     anotherBuffer--;
     if (anotherBuffer <= 0){
       selected = enemyWave.shift();
+      pusher = enemyGrid[random(0, 6)];
       if (selected === 1){
-        enemyList1.push(new Enemy(1500, floor(random(0, 5)), "red", 1, 3));
+        pusher.push(new Enemy(1500, floor(random(0, 5)), "red", 1, 3));
       }
       if (selected === 2){
-        enemyList1.push(new Enemy(1500, floor(random(0, 5)), "blue", 1.5, 2));
+        pusher.push(new Enemy(1500, floor(random(0, 5)), "blue", 1.5, 2));
       }
       if (selected === 3){
-        enemyList1.push(new Enemy(1500, floor(random(0, 5)), "grey", 0.5, 5));
+        pusher.push(new Enemy(1500, floor(random(0, 5)), "grey", 0.5, 5));
       }
       anotherBuffer = random(100, 300);
     }
@@ -313,7 +317,7 @@ function enemyController(){
 
 function mousePressed(){
   if (mouseX > 350 && mouseX < 1350 && mouseY > 250 && mouseY < 750 &&  menu === "game" && scrap >= price && (defenceGrid[cursorY-3][cursorX-4] === 0 || selectedTower === 0)){
-    defenceGrid[cursorY-3][cursorX-4] =  new Structure(selectedTower, cursorX, cursorY, defenceGrid[cursorY-4]);
+    defenceGrid[cursorY-3][cursorX-4] =  new Structure(selectedTower, cursorX, cursorY, enemyGrid[cursorY-4]);
     if (selectedTower !== 5){
       scrap = scrap - price;
     }
