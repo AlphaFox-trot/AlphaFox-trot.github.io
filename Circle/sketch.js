@@ -1,22 +1,29 @@
-// Project Title
-// Your Name
-// Date
+//bubble sort
+
+let someNumbers = [5, 15, 3, 8, 9, 1, 20, 7];
+let done = false;
 
 function setup() {
-  createCanvas(1000, 800);
+  createCanvas(windowWidth, windowHeight);
+  bubbleSort(someNumbers);
 }
 
 function draw() {
   background(220);
-  drawcircles(width/2, 400);
 }
 
-function drawcircles(x, radius){
-  ellpise(x, height / 2, radius*2, radius*2);
-
-  if (radius > 50){
-    drawcircles(x-radius/2, radius/2);
-    drawcircles(x+radius/2, radius/2);
-
+function bubbleSort(anArray){
+  while (done !== true){
+    done = true;
+    for(let i = 0; i < anArray.length; i++){
+      if (anArray[i] > anArray[i+1]){
+        let number1 = anArray[i];
+        anArray[i] = anArray[i+1];
+        anArray[i+1] = number1;
+        done = false;
+      }
+    }
+    console.log(anArray);
   }
+  return anArray;
 }
