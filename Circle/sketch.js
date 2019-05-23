@@ -1,25 +1,22 @@
 // Project Title
 // Your Name
 // Date
-//
-// Extra for Experts:
-// - describe what you did to take this project "above and beyond"
-
-let firstCircle = {
-  x: 400,
-  y: 400, 
-  radius: 600
-};
 
 function setup() {
-  createCanvas(800, 800);
+  createCanvas(1000, 800);
 }
 
 function draw() {
   background(220);
+  drawcircles(width/2, 400);
 }
 
-function drawcircles(point, degree){
+function drawcircles(x, radius){
+  ellpise(x, height / 2, radius*2, radius*2);
 
+  if (radius > 50){
+    drawcircles(x-radius/2, radius/2);
+    drawcircles(x+radius/2, radius/2);
 
+  }
 }

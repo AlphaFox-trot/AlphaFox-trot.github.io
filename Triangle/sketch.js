@@ -6,19 +6,19 @@
 // - describe what you did to take this project "above and beyond"
 
 let points = [
-  {x: 400, y: 100},
-  {x: 100, y: 600},
-  {x: 700, y: 600}
+  {x: 500, y: 50},
+  {x: 50, y: 850},
+  {x: 950, y: 850}
 ];
 
 function setup() {
-  createCanvas(800, 700);
+  createCanvas(1000, 900);
 
 }
 
 function draw() {
   background(220);
-  sierpinski(points, 6);
+  sierpinski(points, 7);
 }
 
 function midpoint(point1, point2){
